@@ -63,7 +63,7 @@ router.post("/users", async (props) => {
   return GenerateResponse({
     body: {
       data: "User Added Successfully (Simulation)",
-      extra: body,
+      payload: body,
     },
     other: {
       status: 201,

@@ -97,28 +97,38 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 
 app.use(bodyParser.json());
-app.use("/.netlify/functions/main", router); // path must route to lambda
-
+app.use("/.netlify/functions/main", router); // IMPORTANT: path must route to lambda
 const userRouter = require("../../Routes/user");
 
-router.use("/user", userRouter);
+router.use("/users", userRouter);
 
-router.get("/new", async (req, res) => {
-  try {
-    res.status(200).send({ data: "success" });
-  } catch (err) {
-    console.log(err);
-    res.status(400).send({ error: "bad request" });
-  }
-});
-
-router.get("/new/:id", async (req, res) => {
-  try {
-    res.status(200).send({ data: "id", id: req.params.id });
-  } catch (err) {
-    console.log(err);
-    res.status(400).send({ error: "bad request" });
-  }
+router.get("/", async (req, res) => {
+  const baseUrl = req.url;
+  return res.json({
+    data: "Hello this is a root route of Express js uri",
+    allAvailableRoutes: [
+      {
+        method: "GET",
+        name: "Get Users",
+        path: baseUrl + "users",
+      },
+      {
+        method: "GET",
+        name: "Get User By Id",
+        path: baseUrl + "users/:id",
+      },
+      {
+        method: "POST",
+        name: "Add User",
+        path: baseUrl + "users",
+      },
+      {
+        method: "DELETE",
+        name: "Delete User By Id",
+        path: baseUrl + "users/:id",
+      },
+    ],
+  });
 });
 
 module.exports = app;
@@ -127,4 +137,6 @@ module.exports.handler = serverless(app);
 
 ### 🔗 Example Endpoints
 
-- [Get Help](https://serverless-ejs.netlify.app/.netlify/functions/main/new)
+- [Get Root](https://serverless-ejs.netlify.app/.netlify/functions/main/)
+- [Get Users List](https://serverless-ejs.netlify.app/.netlify/functions/main/users)
+- [Get User by ID](https://serverless-ejs.netlify.app/.netlify/functions/main/users/1)
