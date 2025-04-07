@@ -13,7 +13,9 @@ router.use("/user", userRouter);
 
 router.get("/new", async (req, res) => {
   try {
-    res.status(200).send({ data: "success" });
+    res
+      .status(200)
+      .send({ data: "This is GET /new request", message: "success" });
   } catch (err) {
     console.log(err);
     res.status(400).send({ error: "bad request" });

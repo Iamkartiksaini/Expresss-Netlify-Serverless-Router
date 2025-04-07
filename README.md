@@ -1,24 +1,93 @@
 # Express-Netlify-Serverless-Router
 
-The Netlify Serverless Functions Router Utility provides an easy and intuitive way to create serverless functions on Netlify, similar to how you would define routes in Express.js. This utility simplifies the process of handling HTTP requests and routing, making it easier to build scalable serverless applications.
+The **Netlify Serverless Functions Router Utility** provides an easy and intuitive way to create serverless functions on Netlify—similar to defining routes in Express.js. This utility simplifies handling HTTP requests and routing, making it easier to build scalable serverless applications.
 
-## Features
+---
+
+## 🚀 1. The Custom Light Utility Way
+
+Here’s a basic example of how to use the **Netlify Serverless Router Utility**:
+
+```javascript
+import NetlifyRouter from "../../Custom-light-utility/Router";
+import GenerateResponse from "../../custom-light-utility/GenrateResponse"; // Optional
+
+const netlifyfilePath = "/.netlify/functions/custom_utility"; // Important
+const router = new NetlifyRouter();
+
+router.get("/users/:id", async (props) => {
+  const { params, query, body, request, context } = props;
+  const userId = params.id;
+  const userDetails = usersData.find((user) => user.id == userId);
+
+  return GenerateResponse({
+    body: userDetails,
+    header: {
+      "Set-Cookie":
+        "netlify_functions=custom_utility; Max-Age=10; HttpOnly; Secure; SameSite=Strict",
+    },
+  });
+});
+
+router.post("/users", async (props) => {
+  const { body } = props;
+  return GenerateResponse({
+    body: {
+      data: "User Added Successfully (Simulation)",
+      extra: body,
+    },
+    other: {
+      status: 201,
+    },
+  });
+});
+
+export default async function handler(request, context) {
+  try {
+    return await router.handleRequest(request, context, netlifyfilePath);
+  } catch (error) {
+    return new Response(
+      JSON.stringify({ message: error.message || "Internal Server Error" }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+}
+```
+
+### 🔗 Example Endpoints
+
+- [Get Help](https://serverless-ejs.netlify.app/.netlify/functions/custom_utility/help)
+- [Get Users List](https://serverless-ejs.netlify.app/.netlify/functions/custom_utility/users)
+- [Get User by ID](https://serverless-ejs.netlify.app/.netlify/functions/custom_utility/users/1)
+
+---
+
+## ⚙️ 2. The Express Way
+
+Here is a basic example of how to use the **Netlify Serverless Router** with **Express.js**:
+
+### ✅ Features
 
 - Easy route definition similar to Express.js
 - Simplified handling of HTTP requests
 - Scalable serverless applications on Netlify
 
-## Installation
+---
 
-To install the Netlify Serverless Router Utility, you can use npm. Make sure to install the required dependencies:
+### 📦 Installation
+
+Install the required dependencies:
 
 ```bash
 npm install express serverless-http body-parser
 ```
 
-## Usage
+---
 
-Here is a basic example of how to use the Netlify Serverless Router Utility:
+### 🧩 Example Code
 
 ```javascript
 const express = require("express");
@@ -29,7 +98,7 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 app.use("/.netlify/functions/main", router); // path must route to lambda
-// app.use("/", router);
+
 const userRouter = require("../../Routes/user");
 
 router.use("/user", userRouter);
@@ -56,8 +125,6 @@ module.exports = app;
 module.exports.handler = serverless(app);
 ```
 
-## Examples
+### 🔗 Example Endpoints
 
-You can test the following endpoint:
-
-[https://serverless-ejs.netlify.app/.netlify/functions/main/new](https://serverless-ejs.netlify.app/.netlify/functions/main/new)
+- [Get Help](https://serverless-ejs.netlify.app/.netlify/functions/main/new)
