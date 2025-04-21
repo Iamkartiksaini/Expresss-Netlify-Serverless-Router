@@ -1,5 +1,5 @@
 import GenerateResponse from "../../custom-light-utility/GenrateResponse";
-import NetlifyRouter from "../../Custom-light-utility/Router";
+import NetlifyRouter from "../../custom-light-utility/Router";
 import usersData from "../store/users.json";
 
 const netlifyfilePath = "/netlify/functions/custom_utility"; // IMPORTANT
