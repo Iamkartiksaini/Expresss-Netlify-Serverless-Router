@@ -2,9 +2,9 @@
   "name": "netlify-serverless-router",
   "version": "1.0.0",
   "description": "The Netlify Serverless Functions Router Utility provides an easy and intuitive way to create serverless functions on Netlify, similar to how you would define routes in Express.js. This utility simplifies the process of handling HTTP requests and routing, making it easier to build scalable serverless applications.",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "dev": "node  index.js",
+    "dev": "node  index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

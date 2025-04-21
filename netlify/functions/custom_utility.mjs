@@ -2,7 +2,7 @@ import GenerateResponse from "../../custom-light-utility/GenrateResponse";
 import NetlifyRouter from "../../custom-light-utility/Router";
 import usersData from "../store/users.json";
 
-const netlifyfilePath = "/netlify/functions/custom_utility"; // IMPORTANT
+const netlifyfilePath = "/.netlify/functions/custom_utility"; // IMPORTANT
 // FOR DEV MODE: const netlifyfilePath = "/.netlify/functions/custom_utility"; // IMPORTANT
 const router = new NetlifyRouter();
 
